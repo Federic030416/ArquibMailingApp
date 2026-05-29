@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArquibMailing.Maui.Pages.DashboardPage"
+             Title="Metrics"
+             BackgroundColor="#080F24">
+    <ScrollView>
+        <VerticalStackLayout Padding="28,32" Spacing="28">
+            <!-- BARRA SUPERIOR (HEADER PREMIUM OSCURO)  -->
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+                
+                <!-- Izquierda: Nombre del Servicio -->
+                <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                    <Label Text="Arquib Mailing Service"
+                           FontFamily="BicycletteBlack"
+                           FontSize="24"
+                           TextColor="White" /> <!-- Blanco Puro -->
+                    <Label Text="Plataforma de Envío Masivo y Control de Campañas"
+                           FontFamily="BicycletteRegular"
+                           FontSize="12"
+                           TextColor="#AC8743" /> <!-- Dorado elegante -->
+                </VerticalStackLayout>
+                <!-- Derecha: Perfil de Usuario + Help -->
+                <HorizontalStackLayout Grid.Column="1" Spacing="20" VerticalOptions="Center">
+                    
+                    <!-- Usuario Arquib (Avatar + Nombre) -->
+                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Border BackgroundColor="#4163B4" 
+                                StrokeShape="RoundRectangle 18"
+                                Stroke="Transparent"
+                                WidthRequest="36" HeightRequest="36">
+                            <Label Text="UA"
+                                   FontFamily="BicycletteBlack"
+                                   FontSize="13"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="Usuario Arquib"
+                               FontFamily="BicycletteNormal"
+                               FontSize="13"
+                               TextColor="#EFEDED" 
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <!-- Divisor sutil -->
+                    <BoxView WidthRequest="1" HeightRequest="24" Color="#1F2E51" VerticalOptions="Center" />
+                    <!-- Botón Help con (?) -->
+                    <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                        <Border BackgroundColor="Transparent"
+                                Stroke="#4163B4"
+                                StrokeThickness="1.5"
+                                StrokeShape="RoundRectangle 11"
+                                WidthRequest="22" HeightRequest="22">
+                            <Label Text="?"
+                                   FontFamily="BicycletteBlack"
+                                   FontSize="12"
+                                   TextColor="#4163B4"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="Help"
+                               FontFamily="BicycletteNormal"
+                               FontSize="13"
+                               TextColor="#4163B4"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    
+                </HorizontalStackLayout>
+            </Grid>
+            <!-- TARJETA CENTRAL DE ACCIÓN (CONCEPTO EXECUTIVE DELF BLUE) -->
+            <Border BackgroundColor="#1F2E51" 
+                    Stroke="#2A4B659E" 
+                    StrokeThickness="1.5"
+                    StrokeShape="RoundRectangle 16"
+                    Padding="24"
+                    Shadow="{Shadow Brush=Black, Offset='0,8', Radius=20, Opacity=0.4}">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20">
+                    
+                    <!-- Textos explicativos -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="10">
+                        <Label Text="Vamos a iniciar la Campaña X"
+                               FontFamily="BicycletteBlack"
+                               FontSize="20"
+                               TextColor="White" />
+                        <Label Text="Esta campaña te permitirá realizar el envío automatizado de documentos adjuntos en base a tu audiencia importada de Excel/CSV y tu plantilla HTML seleccionada. Por favor, revisa las consolidaciones de abajo antes de iniciar el proceso."
+                               FontFamily="BicycletteRegular"
+                               FontSize="13"
+                               LineHeight="1.4"
+                               TextColor="#EFEDED" /> 
+                    </VerticalStackLayout>
+                    <!-- Botones de Acción (Cancelar y Continuar) -->
+                    <HorizontalStackLayout Grid.Column="1" Spacing="12" VerticalOptions="Center">
+                        <Button Text="Cancelar"
+                                FontFamily="BicycletteNormal"
+                                TextColor="#EFEDED"
+                                BackgroundColor="Transparent"
+                                BorderColor="#4B659E"
+                                BorderWidth="1"
+                                CornerRadius="8"
+                                HeightRequest="40"
+                                Padding="16,0" />
+                        
+                        <Button Text="Continuar"
+                                FontFamily="BicycletteBlack"
+                                TextColor="White"
+                                BackgroundColor="#4163B4" 
+                                CornerRadius="8"
+                                HeightRequest="40"
+                                Padding="20,0"
+                                Shadow="{Shadow Brush=#4163B4, Offset='0,3', Radius=5, Opacity=0.3}"/>
+                    </HorizontalStackLayout>
+                    
+                </Grid>
+            </Border>
+            <!-- TARJETAS DE MÉTRICAS (DELF BLUE CARDS)  -->
+            <VerticalStackLayout Spacing="12">
+                <Label Text="Consolidado de Campaña"
+                       FontFamily="BicycletteBlack"
+                       FontSize="16"
+                       TextColor="White" />
+                
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
+                    <!-- Tarjeta 1: Total Envíos -->
+                    <Border Grid.Column="0" BackgroundColor="#1F2E51" Stroke="#2A4B659E" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="16">
+                        <VerticalStackLayout Spacing="6">
+                            <Border BackgroundColor="#1A4163B4" StrokeShape="RoundRectangle 8" Stroke="Transparent" WidthRequest="36" HeightRequest="36" HorizontalOptions="Start">
+                                <Label Text="✉️" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="{Binding TotalDestinatarios}" FontFamily="BicycletteBlack" FontSize="26" TextColor="White" />
+                            <Label Text="Total Envíos" FontFamily="BicycletteRegular" FontSize="12" TextColor="#EFEDED" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- Tarjeta 2: Envíos Exitosos -->
+                    <Border Grid.Column="1" BackgroundColor="#1F2E51" Stroke="#2A4B659E" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="16">
+                        <VerticalStackLayout Spacing="6">
+                            <Border BackgroundColor="#1A06D6A0" StrokeShape="RoundRectangle 8" Stroke="Transparent" WidthRequest="36" HeightRequest="36" HorizontalOptions="Start">
+                                <Label Text="✅" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="{Binding TotalPdfsListos}" FontFamily="BicycletteBlack" FontSize="26" TextColor="#06D6A0" />
+                            <Label Text="Exitosos" FontFamily="BicycletteRegular" FontSize="12" TextColor="#EFEDED" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- Tarjeta 3: Errores Detectados -->
+                    <Border Grid.Column="2" BackgroundColor="#1F2E51" Stroke="#2A4B659E" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="16">
+                        <VerticalStackLayout Spacing="6">
+                            <Border BackgroundColor="#1AEF476F" StrokeShape="RoundRectangle 8" Stroke="Transparent" WidthRequest="36" HeightRequest="36" HorizontalOptions="Start">
+                                <Label Text="❌" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="0" FontFamily="BicycletteBlack" FontSize="26" TextColor="#EF476F" />
+                            <Label Text="Errores" FontFamily="BicycletteRegular" FontSize="12" TextColor="#EFEDED" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </VerticalStackLayout>
+            <!-- LOGS DE TRANSFERENCIA (EXECUTIVE DARK STYLING)  -->
+            <VerticalStackLayout Spacing="12">
+                <Label Text="Logs de Transferencia en Tiempo Real"
+                       FontFamily="BicycletteBlack"
+                       FontSize="16"
+                       TextColor="White" />
+                
+                <Border BackgroundColor="#1F2E51" Stroke="#2A4B659E" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="10">
+                    <VerticalStackLayout Spacing="2">
+                        
+                        <!-- Log Item 1: Éxito -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="12" BackgroundColor="#16264A">
+                            <Border Grid.Column="0" BackgroundColor="#1A06D6A0" StrokeShape="RoundRectangle 8" WidthRequest="32" HeightRequest="32" VerticalOptions="Center">
+                                <Label Text="✓" TextColor="#06D6A0" FontFamily="BicycletteBlack" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Margin="14,0,0,0" Spacing="2" VerticalOptions="Center">
+                                <Label Text="noreply@grupoarquib.com" FontFamily="BicycletteNormal" FontSize="13" TextColor="White" />
+                                <Label Text="Asociación exitosa con Consecutivo 001 - Archivo_1.pdf" FontFamily="BicycletteRegular" FontSize="11" TextColor="#EFEDED" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="Enviado ✅" FontFamily="BicycletteNormal" FontSize="12" TextColor="#06D6A0" VerticalOptions="Center" />
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="#2A4B659E" Margin="12,0" />
+                        <!-- Log Item 2: Falla -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="12">
+                            <Border Grid.Column="0" BackgroundColor="#1AEF476F" StrokeShape="RoundRectangle 8" WidthRequest="32" HeightRequest="32" VerticalOptions="Center">
+                                <Label Text="!" TextColor="#EF476F" FontFamily="BicycletteBlack" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Margin="14,0,0,0" Spacing="2" VerticalOptions="Center">
+                                <Label Text="soporte@grupoarquib.com" FontFamily="BicycletteNormal" FontSize="13" TextColor="White" />
+                                <Label Text="Falla al asociar archivo PDF: Archivo no encontrado en la ruta consecutiva." FontFamily="BicycletteItalic" FontSize="11" TextColor="#EF476F" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="Error ❌" FontFamily="BicycletteNormal" FontSize="12" TextColor="#EF476F" VerticalOptions="Center" />
+                        </Grid>
+                        
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+            <!-- Activity Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="#4163B4" />
+            <!-- Última actualización del Log -->
+            <Label Text="{Binding UltimaActividad, StringFormat='Última actualización: {0}'}"
+                   FontFamily="BicycletteItalic"
+                   FontSize="12"
+                   TextColor="#94A3B8"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

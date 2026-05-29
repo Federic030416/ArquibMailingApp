@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ArquibMailing.Application/ArquibMailing.Application.csproj" />
+  <Project Path="ArquibMailing.Domain/ArquibMailing.Domain.csproj" />
+  <Project Path="ArquibMailing.Infrastructure/ArquibMailing.Infrastructure.csproj" />
+  <Project Path="ArquibMailing.Maui/ArquibMailing.Maui.csproj" />
+</Solution>

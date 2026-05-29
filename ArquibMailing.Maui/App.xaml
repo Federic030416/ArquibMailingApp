@@ -1,0 +1,25 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ArquibMailing.Maui"
+             xmlns:converters="clr-namespace:ArquibMailing.Maui.Converters"
+             x:Class="ArquibMailing.Maui.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <!-- Convertidores globales -->
+            <converters:NotNullConverter x:Key="NotNullConverter" />
+            <converters:NotEmptyConverter x:Key="NotEmptyConverter" />
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+            <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <converters:BoolToBackgroundConverter x:Key="BoolToBackgroundConverter" />
+            <converters:BoolToTextColorConverter x:Key="BoolToTextColorConverter" />
+            <converters:InvertedBoolToBackgroundConverter x:Key="InvertedBoolToBackgroundConverter" />
+            <converters:InvertedBoolToTextColorConverter x:Key="InvertedBoolToTextColorConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

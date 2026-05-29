@@ -1,0 +1,26 @@
+## Ignore Visual Studio temporary files, user settings, and build outputs
+.vs/
+[Db]in/
+[Oo]bj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Ignore OS-generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+## Ignore MAUI and Mobile specific temporary folders
+AppPackages/
+BundleArtifacts/
+ClientBin/
+Generated Files/
+_Changelist*
+
+## Ignore local config overrides (if any)
+*.local.json
+appsettings.Development.json
+ArquibMailing.Maui/appsettings.json

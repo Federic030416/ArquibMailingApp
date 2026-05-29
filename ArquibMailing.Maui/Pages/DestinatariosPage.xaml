@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArquibMailing.Maui.Pages.DestinatariosPage"
+             Title="Destinatarios"
+             BackgroundColor="#F7F9FC">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Barra de búsqueda -->
+        <Border Grid.Row="0" Margin="20,20,20,10" Padding="0"
+               BackgroundColor="White"
+               Stroke="#E2E8F0"
+               StrokeThickness="1"
+               StrokeShape="RoundRectangle 12">
+            <SearchBar Placeholder="🔍 Buscar por correo o consecutivo..."
+                       Text="{Binding CriterioBusqueda}"
+                       BackgroundColor="Transparent" />
+        </Border>
+
+        <!-- Lista de destinatarios -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Destinatarios}"
+                        Margin="20,0,20,20">
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="12" Padding="40">
+                    <Label Text="📭" FontSize="48" HorizontalOptions="Center" />
+                    <Label Text="No se encontraron destinatarios"
+                           FontSize="16" TextColor="#94A3B8"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,4" Padding="16"
+                           BackgroundColor="White"
+                           Stroke="#E2E8F0"
+                           StrokeThickness="1"
+                           StrokeShape="RoundRectangle 12">
+                        <Grid ColumnDefinitions="Auto,*">
+
+                            <!-- Avatar con consecutivo -->
+                            <Border Grid.Column="0"
+                                    BackgroundColor="#0077B6"
+                                    StrokeShape="RoundRectangle 22"
+                                    Stroke="Transparent"
+                                    WidthRequest="44" HeightRequest="44"
+                                    VerticalOptions="Center">
+                                <Label Text="{Binding Consecutivo}"
+                                       TextColor="White"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+
+                            <!-- Datos del destinatario -->
+                            <VerticalStackLayout Grid.Column="1" Margin="14,0,0,0" Spacing="2" VerticalOptions="Center">
+                                <Label Text="{Binding Email}"
+                                       FontAttributes="Bold"
+                                       FontSize="14"
+                                       TextColor="#0F172A" />
+                                <Label Text="{Binding FileName}"
+                                       FontSize="12"
+                                       TextColor="#64748B" />
+                                <Label Text="{Binding Consecutivo, StringFormat='# {0}'}"
+                                       FontSize="11"
+                                       TextColor="#94A3B8" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

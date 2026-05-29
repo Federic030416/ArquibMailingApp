@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ArquibMailing.Maui.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:ArquibMailing.Maui.Pages"
+    Title="ArquibMailing"
+    FlyoutBackgroundColor="#080F24"
+    Shell.NavBarHasShadow="False"
+    Shell.BackgroundColor="#080F24"
+    Shell.ForegroundColor="White"
+    Shell.TitleColor="White">
+
+    <!--  Encabezado del menú lateral -->
+    <Shell.FlyoutHeader>
+        <Grid BackgroundColor="#1F2E51" Padding="24,48,24,24" RowDefinitions="Auto,Auto,Auto,Auto">
+            <!-- Logo circle -->
+            <Border BackgroundColor="#4163B4"
+                    StrokeShape="RoundRectangle 30"
+                    Stroke="Transparent"
+                    WidthRequest="60" HeightRequest="60"
+                    HorizontalOptions="Start">
+                <Label Text="A+"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+            <Label Grid.Row="1"
+                   Text="ArquibMailing"
+                   FontSize="22"
+                   FontFamily="BicycletteBlack"
+                   TextColor="White"
+                   Margin="0,14,0,0" />
+            <Label Grid.Row="2"
+                   Text="Arquib Plus Fintech S.A.S."
+                   FontSize="12"
+                   TextColor="#AC8743" />
+            <BoxView Grid.Row="3"
+                     HeightRequest="1"
+                     Color="#EFEDED"
+                     Margin="0,18,0,0" />
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <!-- ── Estilo de los ítems del menú  -->
+     <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid HeightRequest="52" Padding="24,0">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <!-- El elemento seleccionado tendrá fondo True Blue sutil -->
+                                <Setter Property="BackgroundColor" Value="#1A4163B4" /> 
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0"
+                       Source="{Binding FlyoutIcon}"
+                       WidthRequest="20" HeightRequest="20"
+                       VerticalOptions="Center" />
+                <Label Grid.Column="1"
+                       Text="{Binding Title}"
+                       FontFamily="BicycletteNormal"
+                       FontSize="14"
+                       TextColor="#EFEDED" 
+                       Margin="14,0,0,0"
+                       VerticalOptions="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+
+    <!--  Páginas  -->
+
+    <ShellContent
+        Title="Templates"
+        Route="Templates"
+        Icon="template_icon.png"
+        ContentTemplate="{DataTemplate pages:TemplatesPage}" />
+
+    <ShellContent
+        Title="Audience"
+        Route="Audience"
+        Icon="people_icon.png"
+        ContentTemplate="{DataTemplate pages:DestinatariosPage}" />
+
+    <ShellContent
+        Title="Campaña"
+        Route="Campaña"
+        Icon="campaign_icon.png"
+        ContentTemplate="{DataTemplate pages:NuevoEnvioPage}" />
+    
+    <ShellContent
+        Title="Configurations"
+        Route="Configurations"
+        Icon="settings_icon.png"
+        ContentTemplate="{DataTemplate pages:DashboardPage}" />
+
+</Shell>
+

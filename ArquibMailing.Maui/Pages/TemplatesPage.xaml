@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArquibMailing.Maui.Pages.TemplatesPage"
+             Title="Templates"
+             BackgroundColor="#080F24"> 
+
+    <ScrollView>
+        <VerticalStackLayout Padding="28,32" Spacing="28">
+
+            <!-- BARRA SUPERIOR (CONEXIÓN DE MARCA)-->
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+                <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                    <Label Text="Arquib Mailing Service"
+                           FontFamily="BicycletteBlack"
+                           FontSize="24"
+                           TextColor="White" />
+                    <Label Text="Gestor y Diseñador Visual de Plantillas de Correo HTML"
+                           FontFamily="BicycletteRegular"
+                           FontSize="12"
+                           TextColor="#AC8743" />
+                </VerticalStackLayout>
+
+                <HorizontalStackLayout Grid.Column="1" Spacing="20" VerticalOptions="Center">
+                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Border BackgroundColor="#4163B4"
+                                StrokeShape="RoundRectangle 18"
+                                WidthRequest="36" HeightRequest="36">
+                            <Label Text="UA" FontFamily="BicycletteBlack" FontSize="13" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="Usuario Arquib" FontFamily="BicycletteNormal" FontSize="13" TextColor="#EFEDED" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <BoxView WidthRequest="1" HeightRequest="24" Color="#1F2E51" VerticalOptions="Center" />
+                    <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                        <Border BackgroundColor="Transparent" Stroke="#4163B4" StrokeThickness="1.5" StrokeShape="RoundRectangle 11" WidthRequest="22" HeightRequest="22">
+                            <Label Text="?" FontFamily="BicycletteBlack" FontSize="12" TextColor="#4163B4" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="Help" FontFamily="BicycletteNormal" FontSize="13" TextColor="#4163B4" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <!-- DISEÑADOR EN DOS COLUMNAS (GRID MAESTRO) -->
+            <Grid ColumnDefinitions="1.2*, 2*" ColumnSpacing="24">
+
+                <!-- COLUMNA IZQUIERDA: CONFIGURACIÓN DE PLANTILLA -->
+                <VerticalStackLayout Grid.Column="0" Spacing="20">
+                    <Label Text="Configuración General" FontFamily="BicycletteBlack" FontSize="16" TextColor="White" />
+
+                    <Border BackgroundColor="#1F2E51" Stroke="#2A4B659E" StrokeShape="RoundRectangle 14" Padding="20">
+                        <VerticalStackLayout Spacing="16">
+                            
+                            <!-- Campo 1: Nombre Interno -->
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="NOMBRE DE PLANTILLA" FontFamily="BicycletteNormal" FontSize="10" TextColor="#AC8743" CharacterSpacing="1" />
+                                <Border BackgroundColor="#080F24" Stroke="#2A4B659E" StrokeShape="RoundRectangle 8" Padding="10,0">
+                                    <Entry Placeholder="Ej: Campaña de Bienvenida" FontFamily="BicycletteRegular" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="Transparent" HeightRequest="40" />
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <!-- Campo 2: Asunto del Correo -->
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="ASUNTO DEL CORREO (SUBJECT)" FontFamily="BicycletteNormal" FontSize="10" TextColor="#AC8743" CharacterSpacing="1" />
+                                <Border BackgroundColor="#080F24" Stroke="#2A4B659E" StrokeShape="RoundRectangle 8" Padding="10,0">
+                                    <Entry Placeholder="Ej: ¡Te damos la bienvenida a Arquib Plus!" FontFamily="BicycletteRegular" TextColor="White" PlaceholderColor="#64748B" BackgroundColor="Transparent" HeightRequest="40" />
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <!-- Selector de Colores Corporativos -->
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="COLOR DE ACENTO" FontFamily="BicycletteNormal" FontSize="10" TextColor="#AC8743" CharacterSpacing="1" />
+                                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                                    <Button Grid.Column="0" BackgroundColor="#4163B4" HeightRequest="28" CornerRadius="6" Text="Blue" FontSize="10" TextColor="White" FontFamily="BicycletteNormal" />
+                                    <Button Grid.Column="1" BackgroundColor="#AC8743" HeightRequest="28" CornerRadius="6" Text="Gold" FontSize="10" TextColor="White" FontFamily="BicycletteNormal" />
+                                    <Button Grid.Column="2" BackgroundColor="#06D6A0" HeightRequest="28" CornerRadius="6" Text="Aqua" FontSize="10" TextColor="White" FontFamily="BicycletteNormal" />
+                                </Grid>
+                            </VerticalStackLayout>
+
+                            <!-- Botones de Acción de Estructura -->
+                            <Button Text="➕ Agregar Sección HTML"
+                                    FontFamily="BicycletteNormal"
+                                    TextColor="White"
+                                    BackgroundColor="#1A4163B4"
+                                    BorderColor="#4163B4"
+                                    BorderWidth="1"
+                                    CornerRadius="8"
+                                    HeightRequest="42"
+                                    Margin="0,10,0,0" />
+
+                            <Button Text="💾 Guardar Plantilla"
+                                    FontFamily="BicycletteBlack"
+                                    TextColor="White"
+                                    BackgroundColor="#4163B4"
+                                    CornerRadius="8"
+                                    HeightRequest="44"
+                                    Shadow="{Shadow Brush=#4163B4, Offset='0,3', Radius=8, Opacity=0.3}" />
+
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- 💻 COLUMNA DERECHA: SIMULADOR DE EDITOR HTML WYSIWYG -->
+                <VerticalStackLayout Grid.Column="1" Spacing="20">
+                    <Label Text="Editor HTML &amp; Vista Previa" FontFamily="BicycletteBlack" FontSize="16" TextColor="White" />
+
+                    <Border BackgroundColor="#1F2E51" Stroke="#2A4B659E" StrokeShape="RoundRectangle 14" Padding="0">
+                        <VerticalStackLayout Spacing="0">
+                            
+                            <!-- Barra de Herramientas del Editor (Rich Text) -->
+                            <Border BackgroundColor="#16264A" Stroke="Transparent" Padding="14,10">
+                                <HorizontalStackLayout Spacing="16">
+                                    <Label Text="Negrita (B)" FontFamily="BicycletteBlack" FontSize="13" TextColor="White" VerticalOptions="Center" />
+                                    <Label Text="Cursiva (I)" FontFamily="BicycletteItalic" FontSize="13" TextColor="#EFEDED" VerticalOptions="Center" />
+                                    <Label Text="Subrayado" FontFamily="BicycletteRegular" FontSize="13" TextColor="#EFEDED" TextDecorations="Underline" VerticalOptions="Center" />
+                                    <BoxView WidthRequest="1" HeightRequest="16" Color="#2A4B659E" VerticalOptions="Center" />
+                                    <Label Text="Alinear Centro" FontFamily="BicycletteRegular" FontSize="13" TextColor="#EFEDED" VerticalOptions="Center" />
+                                    <Label Text="Color Acento" FontFamily="BicycletteNormal" FontSize="13" TextColor="#AC8743" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </Border>
+
+                            <BoxView HeightRequest="1.5" Color="#2A4B659E" />
+
+                            <!-- Área del Editor / Correo Diseñado -->
+                            <VerticalStackLayout Padding="24" Spacing="20">
+                                <Border BackgroundColor="#080F24" Stroke="#2A4B659E" StrokeShape="RoundRectangle 10" Padding="20">
+                                    <VerticalStackLayout Spacing="16">
+                                        
+                                        <!-- Encabezado Simulado del Correo -->
+                                        <Border BackgroundColor="#1F2E51" Stroke="Transparent" HeightRequest="50" StrokeShape="RoundRectangle 6">
+                                            <Label Text="ARQUIB MAILING SERVICE" FontFamily="BicycletteBlack" FontSize="14" TextColor="#AC8743" HorizontalOptions="Center" VerticalOptions="Center" CharacterSpacing="1.5" />
+                                        </Border>
+                                        
+                                        <!-- Línea de acento color oro -->
+                                        <BoxView HeightRequest="3" Color="#AC8743" HorizontalOptions="Fill" />
+
+                                        <!-- Cuerpo del Correo en HTML -->
+                                        <Label Text="¡Hola, [Nombre]!" FontFamily="BicycletteBlack" FontSize="18" TextColor="White" />
+                                        
+                                        <Label Text="Queremos darte una cordial bienvenida a nuestra plataforma financiera. A partir de hoy podrás gestionar todos tus envíos, asociar tus destinatarios de forma automatizada y revisar los logs de transferencia en tiempo real."
+                                               FontFamily="BicycletteRegular" FontSize="13" LineHeight="1.4" TextColor="#EFEDED" />
+
+                                        <!-- Botón de acción simulado en el correo -->
+                                        <Button Text="Ir a mi Portal de Usuario" FontFamily="BicycletteNormal" TextColor="White" BackgroundColor="#4163B4" CornerRadius="6" HeightRequest="36" HorizontalOptions="Start" Padding="14,0" />
+
+                                        <BoxView HeightRequest="1" Color="#1F2E51" Margin="0,10,0,0" />
+
+                                        <Label Text="Atentamente, el equipo de Arquib Plus Fintech S.A.S." FontFamily="BicycletteItalic" FontSize="11" TextColor="#94A3B8" />
+
+                                    </VerticalStackLayout>
+                                </Border>
+                            </VerticalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

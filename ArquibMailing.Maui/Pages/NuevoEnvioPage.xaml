@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ArquibMailing.Maui.ViewModels"
+             x:Class="ArquibMailing.Maui.Pages.NuevoEnvioPage"
+             Title="{Binding Title}"
+             BackgroundColor="#080F24"> <!-- Prussian Blue de Fondo -->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="28,32" Spacing="24">
+
+            <!-- BARRA SUPERIOR (HEADER DE MARCA UNIFICADO) -->
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+                <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                    <Label Text="Arquib Mailing Service"
+                           FontFamily="BicycletteBlack"
+                           FontSize="24"
+                           TextColor="White" />
+                    <Label Text="Configuración y Lanzamiento de Envíos de Campaña"
+                           FontFamily="BicycletteRegular"
+                           FontSize="12"
+                           TextColor="#AC8743" />
+                </VerticalStackLayout>
+
+                <HorizontalStackLayout Grid.Column="1" Spacing="20" VerticalOptions="Center">
+                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Border BackgroundColor="#4163B4"
+                                StrokeShape="RoundRectangle 18"
+                                WidthRequest="36" HeightRequest="36">
+                            <Label Text="UA" FontFamily="BicycletteBlack" FontSize="13" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="Usuario Arquib" FontFamily="BicycletteNormal" FontSize="13" TextColor="#EFEDED" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <BoxView WidthRequest="1" HeightRequest="24" Color="#1F2E51" VerticalOptions="Center" />
+                    <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                        <Border BackgroundColor="Transparent" Stroke="#4163B4" StrokeThickness="1.5" StrokeShape="RoundRectangle 11" WidthRequest="22" HeightRequest="22">
+                            <Label Text="?" FontFamily="BicycletteBlack" FontSize="12" TextColor="#4163B4" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="Help" FontFamily="BicycletteNormal" FontSize="13" TextColor="#4163B4" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <!-- PASO 1: SELECCIÓN DE LA AUDIENCIA (DELF BLUE CARD)  -->
+            <Border BackgroundColor="#1F2E51"
+                    Stroke="#2A4B659E"
+                    StrokeThickness="1.5"
+                    StrokeShape="RoundRectangle 16"
+                    Padding="24">
+                <VerticalStackLayout Spacing="16">
+
+                    <!-- Cabecera del Paso 1 -->
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Border Grid.Column="0"
+                                BackgroundColor="#1A4163B4"
+                                StrokeShape="RoundRectangle 8"
+                                Stroke="#4163B4"
+                                StrokeThickness="1"
+                                WidthRequest="32" HeightRequest="32">
+                            <Label Text="1"
+                                   FontFamily="BicycletteBlack"
+                                   FontSize="15"
+                                   TextColor="#4163B4"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Column="1"
+                               Text="Selección de Audiencia / Destinatario"
+                               FontFamily="BicycletteBlack"
+                               FontSize="17"
+                               TextColor="White"
+                               VerticalOptions="Center"
+                               Margin="12,0,0,0" />
+                    </Grid>
+
+                    <!-- Selector de modo (Excel vs Manual) -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,5,0,0">
+                        <Button Grid.Column="0"
+                                Text="📋 Lista Excel"
+                                FontFamily="BicycletteNormal"
+                                BackgroundColor="{Binding EsEnvioManual, Converter={StaticResource InvertedBoolToBackgroundConverter}}"
+                                TextColor="{Binding EsEnvioManual, Converter={StaticResource InvertedBoolToTextColorConverter}}"
+                                FontSize="13"
+                                CornerRadius="10"
+                                HeightRequest="42"
+                                Command="{Binding CambiarModoListaCommand}" />
+                        
+                        <Button Grid.Column="1"
+                                Text="✏️ Correo Manual"
+                                FontFamily="BicycletteNormal"
+                                BackgroundColor="{Binding EsEnvioManual, Converter={StaticResource BoolToBackgroundConverter}}"
+                                TextColor="{Binding EsEnvioManual, Converter={StaticResource BoolToTextColorConverter}}"
+                                FontSize="13"
+                                CornerRadius="10"
+                                HeightRequest="42"
+                                Command="{Binding CambiarModoManualCommand}" />
+                    </Grid>
+
+                    <!-- MODO BÚSQUEDA (AUDIENCIA DE EXCEL) -->
+                    <VerticalStackLayout IsVisible="{Binding EsEnvioManual, Converter={StaticResource InvertedBoolConverter}}" Spacing="12">
+                        <!-- Barra de Búsqueda Dark -->
+                        <Border BackgroundColor="#080F24" Stroke="#2A4B659E" StrokeShape="RoundRectangle 8" Padding="2,0">
+                            <SearchBar Placeholder="Buscar por correo, nombre o consecutivo..."
+                                       Text="{Binding TextoBusqueda}"
+                                       FontFamily="BicycletteRegular"
+                                       TextColor="White"
+                                       PlaceholderColor="#64748B"
+                                       BackgroundColor="Transparent"
+                                       CancelButtonColor="#4163B4" />
+                        </Border>
+
+                        <!-- Lista de Audiencia en CollectionView -->
+                        <Border BackgroundColor="#080F24" Stroke="#2A4B659E" StrokeThickness="1" StrokeShape="RoundRectangle 10">
+                            <CollectionView ItemsSource="{Binding DestinatariosFiltrados}"
+                                            SelectionMode="Multiple"
+                                            SelectionChanged="OnCollectionViewSelectionChanged"
+                                            HeightRequest="180">
+
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Padding="14,10" ColumnDefinitions="Auto,*">
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal" />
+                                                    <VisualState x:Name="Selected">
+                                                        <VisualState.Setters>
+                                                            <Setter Property="BackgroundColor" Value="#4163B4" /> 
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                            
+                                            <!-- Burbuja de Consecutivo -->
+                                            <Border Grid.Column="0"
+                                                    BackgroundColor="#4163B4"
+                                                    StrokeShape="RoundRectangle 18"
+                                                    Stroke="Transparent"
+                                                    WidthRequest="36" HeightRequest="36">
+                                                <Label Text="{Binding Consecutivo}"
+                                                       FontFamily="BicycletteBlack"
+                                                       FontSize="13"
+                                                       TextColor="White"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                            </Border>
+                                            
+                                            <!-- Información del Contacto -->
+                                            <VerticalStackLayout Grid.Column="1" Margin="12,0,0,0" Spacing="2">
+                                                <!-- Nombre y Email -->
+                                                <Grid ColumnDefinitions="Auto,Auto">
+                                                    <Label Grid.Column="0" 
+                                                           Text="{Binding Nombre}" 
+                                                           FontFamily="BicycletteBlack" 
+                                                           FontSize="15" 
+                                                           TextColor="White" />
+                                                    
+                                                    <Label Grid.Column="1"
+                                                           Text=" (Seleccionar)"
+                                                           FontFamily="BicycletteNormal"
+                                                           FontSize="13"
+                                                           TextColor="#E2E8F0"
+                                                           IsVisible="{Binding IsSelected, Converter={StaticResource InvertedBoolConverter}}"/>
+                                                </Grid>
+                                                
+                                                <!-- Cargo (opcional) -->
+                                                <Label Text="{Binding Cargo}"
+                                                       FontFamily="BicycletteRegular"
+                                                       FontSize="13"
+                                                       TextColor="#94A3B8"
+                                                       IsVisible="{Binding Cargo, Converter={StaticResource NotNullOrEmptyConverter}}" />
+                                                
+                                                <!-- Email (opcional pero recomendado mostrar si existe) -->
+                                                <Label Text="{Binding Correo}"
+                                                       FontFamily="BicycletteRegular"
+                                                       FontSize="12"
+                                                       TextColor="#94A3B8"
+                                                       IsVisible="{Binding Correo, Converter={StaticResource NotNullOrEmptyConverter}}" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Border>
+
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Padding="14,10" ColumnDefinitions="Auto,*">
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal" />
+                                                    <VisualState x:Name="Selected">
+                                                        <VisualState.Setters>
+                                                            <Setter Property="BackgroundColor" Value="#4163B4" /> 
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                            
+                                            <!-- Burbuja de Consecutivo -->
+                                            <Border Grid.Column="0"
+                                                    BackgroundColor="#4163B4"
+                                                    StrokeShape="RoundRectangle 18"
+                                                    Stroke="Transparent"
+                                                    WidthRequest="36" HeightRequest="36"
+                                                    VerticalOptions="Center">
+                                                <Label Text="{Binding Consecutivo}"
+                                                       FontFamily="BicycletteBlack"
+                                                       FontSize="12"
+                                                       TextColor="White"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                            </Border>
+                                            
+                                            <VerticalStackLayout Grid.Column="1" Margin="12,0,0,0" Spacing="2" VerticalOptions="Center">
+                                                <Label Text="{Binding Email}" FontFamily="BicycletteNormal" FontSize="13" TextColor="White" />
+                                                <Label Text="{Binding Consecutivo, StringFormat='Consecutivo de Audiencia: {0}'}" FontFamily="BicycletteRegular" FontSize="11" TextColor="#94A3B8" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                                
+                                <CollectionView.EmptyView>
+                                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20">
+                                        <Label Text="No se encontraron destinatarios registrados"
+                                               FontFamily="BicycletteRegular"
+                                               FontSize="13" TextColor="#94A3B8"
+                                               HorizontalOptions="Center" />
+                                    </VerticalStackLayout>
+                                </CollectionView.EmptyView>
+                            </CollectionView>
+                        </Border>
+
+                        <!-- Detalle de Selección Activa -->
+                        <Border IsVisible="{Binding TieneSeleccionados}"
+                                BackgroundColor="#1A4163B4" Stroke="#4163B4" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="16">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label Grid.Column="0" Text ="👥" FontSize="20" VerticalOptions="Center" />
+                                <VerticalStackLayout Grid.Column="1" Margin="10,0,0,0" Spacing="2">
+                                    <Label Text="{Binding TextoSeleccionados}" FontFamily="BicycletteNormal" TextColor="White" FontSize="13" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- MODO CORREO MANUAL -->
+                    <VerticalStackLayout IsVisible="{Binding EsEnvioManual}" Spacing="8">
+                        <Label Text="DIRECCIÓN DE CORREO" FontFamily="BicycletteNormal" FontSize="10" TextColor="#AC8743" CharacterSpacing="1" />
+                        <Border BackgroundColor="#080F24" Stroke="#2A4B659E" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="12,0">
+                            <Entry Placeholder="ejemplo@correo.com"
+                                   FontFamily="BicycletteRegular"
+                                   TextColor="White"
+                                   PlaceholderColor="#64748B"
+                                   Text="{Binding CorreoManual, Mode=TwoWay}"
+                                   Keyboard="Email"
+                                   FontSize="14"
+                                   BackgroundColor="Transparent"
+                                   HeightRequest="42" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- PASO 2: ASOCIACIÓN DE ARCHIVO PDF (DELF BLUE CARD)  -->
+            <Border BackgroundColor="#1F2E51"
+                    Stroke="#2A4B659E"
+                    StrokeThickness="1.5"
+                    StrokeShape="RoundRectangle 16"
+                    Padding="24">
+                <VerticalStackLayout Spacing="14">
+
+                    <!-- Cabecera del Paso 2 -->
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Border Grid.Column="0"
+                                BackgroundColor="#1A06D6A0"
+                                StrokeShape="RoundRectangle 8"
+                                Stroke="#06D6A0"
+                                StrokeThickness="1"
+                                WidthRequest="32" HeightRequest="32">
+                            <Label Text="2"
+                                   FontFamily="BicycletteBlack"
+                                   FontSize="15"
+                                   TextColor="#06D6A0"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Column="1"
+                               Text="Carga de Documento de Campaña"
+                               FontFamily="BicycletteBlack"
+                               FontSize="17"
+                               TextColor="White"
+                               VerticalOptions="Center"
+                               Margin="12,0,0,0" />
+                    </Grid>
+
+                    <!-- Selector de Archivo PDF -->
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14" Margin="0,5,0,0">
+                        <Button Grid.Column="0"
+                                Text="📂 Examinar..."
+                                Command="{Binding SeleccionarArchivoCommand}"
+                                BackgroundColor="#4163B4"
+                                TextColor="White"
+                                FontFamily="BicycletteBlack"
+                                CornerRadius="8"
+                                Padding="20,10"
+                                FontSize="13"
+                                HeightRequest="40"
+                                Shadow="{Shadow Brush=#4163B4, Offset='0,2', Radius=5, Opacity=0.25}"/>
+                        
+                        <Label Grid.Column="1"
+                               Text="{Binding NombreArchivo}"
+                               FontFamily="BicycletteRegular"
+                               VerticalOptions="Center"
+                               TextColor="#EFEDED"
+                               FontSize="13" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ══ BOTÓN ACCIÓN: INICIAR ENVIOS  -->
+            <Button Text="✉️   INICIAR ENVIOS DE CAMPAÑA"
+                    Command="{Binding EnviarCommand}"
+                    BackgroundColor="#4163B4"
+                    TextColor="White"
+                    FontFamily="BicycletteBlack"
+                    FontSize="15"
+                    CharacterSpacing="1.2"
+                    CornerRadius="12"
+                    HeightRequest="52"
+                    Shadow="{Shadow Brush=#4163B4, Offset='0,4', Radius=10, Opacity=0.3}" />
+
+            <!-- Indicador de Carga -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="#4163B4"
+                               HeightRequest="40" />
+
+            <!-- Mensaje Dinámico de Estado / Alerta de Éxito o Error -->
+            <Border IsVisible="{Binding MensajeEstado, Converter={StaticResource NotEmptyConverter}}"
+                    BackgroundColor="{Binding EnvioExitoso, Converter={StaticResource BoolToColorConverter}}"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="16"
+                    Shadow="{Shadow Brush=Black, Offset='0,4', Radius=8, Opacity=0.15}">
+                <Label Text="{Binding MensajeEstado}"
+                       FontFamily="BicycletteBlack"
+                       FontSize="14"
+                       TextColor="White"
+                       HorizontalOptions="Center" />
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
