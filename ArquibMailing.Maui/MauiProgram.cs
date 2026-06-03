@@ -23,10 +23,10 @@ public static class MauiProgram
                 //Aca definimos los alias para usar las fuentes en el XAML
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                fonts.AddFont("Outfit-Black.ttf", "BicycletteBlack");
-                fonts.AddFont("Outfit-Bold.ttf", "BicycletteNormal");
-                fonts.AddFont("Outfit-Regular.ttf", "BicycletteRegular");
-                fonts.AddFont("Outfit-Light.ttf", "BicycletteItalic");
+                fonts.AddFont("fonnts.com-Bicyclette_Black 1.otf", "BicycletteBlack");
+                fonts.AddFont("fonnts.com-Bicyclette_Bold 1.otf", "BicycletteNormal");
+                fonts.AddFont("fonnts.com-Bicyclette_Regular 1.otf", "BicycletteRegular");
+                fonts.AddFont("fonnts.com-Bicyclette_Thin 1.otf", "BicycletteItalic");
             });
 
         // ── Configuración (appsettings.json del backend) ──────────────────
@@ -56,6 +56,7 @@ public static class MauiProgram
         builder.Services.AddTransient<DashboardPage>();
         builder.Services.AddTransient<NuevoEnvioPage>();
         builder.Services.AddTransient<DestinatariosPage>();
+        builder.Services.AddTransient<TemplatesPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

@@ -124,73 +124,7 @@
                                                     <VisualState x:Name="Normal" />
                                                     <VisualState x:Name="Selected">
                                                         <VisualState.Setters>
-                                                            <Setter Property="BackgroundColor" Value="#4163B4" /> 
-                                                        </VisualState.Setters>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-                                            
-                                            <!-- Burbuja de Consecutivo -->
-                                            <Border Grid.Column="0"
-                                                    BackgroundColor="#4163B4"
-                                                    StrokeShape="RoundRectangle 18"
-                                                    Stroke="Transparent"
-                                                    WidthRequest="36" HeightRequest="36">
-                                                <Label Text="{Binding Consecutivo}"
-                                                       FontFamily="BicycletteBlack"
-                                                       FontSize="13"
-                                                       TextColor="White"
-                                                       HorizontalOptions="Center"
-                                                       VerticalOptions="Center" />
-                                            </Border>
-                                            
-                                            <!-- Información del Contacto -->
-                                            <VerticalStackLayout Grid.Column="1" Margin="12,0,0,0" Spacing="2">
-                                                <!-- Nombre y Email -->
-                                                <Grid ColumnDefinitions="Auto,Auto">
-                                                    <Label Grid.Column="0" 
-                                                           Text="{Binding Nombre}" 
-                                                           FontFamily="BicycletteBlack" 
-                                                           FontSize="15" 
-                                                           TextColor="White" />
-                                                    
-                                                    <Label Grid.Column="1"
-                                                           Text=" (Seleccionar)"
-                                                           FontFamily="BicycletteNormal"
-                                                           FontSize="13"
-                                                           TextColor="#E2E8F0"
-                                                           IsVisible="{Binding IsSelected, Converter={StaticResource InvertedBoolConverter}}"/>
-                                                </Grid>
-                                                
-                                                <!-- Cargo (opcional) -->
-                                                <Label Text="{Binding Cargo}"
-                                                       FontFamily="BicycletteRegular"
-                                                       FontSize="13"
-                                                       TextColor="#94A3B8"
-                                                       IsVisible="{Binding Cargo, Converter={StaticResource NotNullOrEmptyConverter}}" />
-                                                
-                                                <!-- Email (opcional pero recomendado mostrar si existe) -->
-                                                <Label Text="{Binding Correo}"
-                                                       FontFamily="BicycletteRegular"
-                                                       FontSize="12"
-                                                       TextColor="#94A3B8"
-                                                       IsVisible="{Binding Correo, Converter={StaticResource NotNullOrEmptyConverter}}" />
-                                            </VerticalStackLayout>
-                                        </Grid>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </Border>
-
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Padding="14,10" ColumnDefinitions="Auto,*">
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal" />
-                                                    <VisualState x:Name="Selected">
-                                                        <VisualState.Setters>
-                                                            <Setter Property="BackgroundColor" Value="#4163B4" /> 
+                                                            <Setter Property="BackgroundColor" Value="#1A4163B4" /> 
                                                         </VisualState.Setters>
                                                     </VisualState>
                                                 </VisualStateGroup>
@@ -205,20 +139,28 @@
                                                     VerticalOptions="Center">
                                                 <Label Text="{Binding Consecutivo}"
                                                        FontFamily="BicycletteBlack"
-                                                       FontSize="12"
+                                                       FontSize="13"
                                                        TextColor="White"
                                                        HorizontalOptions="Center"
                                                        VerticalOptions="Center" />
                                             </Border>
                                             
+                                            <!-- Información del Contacto -->
                                             <VerticalStackLayout Grid.Column="1" Margin="12,0,0,0" Spacing="2" VerticalOptions="Center">
-                                                <Label Text="{Binding Email}" FontFamily="BicycletteNormal" FontSize="13" TextColor="White" />
-                                                <Label Text="{Binding Consecutivo, StringFormat='Consecutivo de Audiencia: {0}'}" FontFamily="BicycletteRegular" FontSize="11" TextColor="#94A3B8" />
+                                                <Label Text="{Binding Nombre}" 
+                                                       FontFamily="BicycletteBlack" 
+                                                       FontSize="15" 
+                                                       TextColor="White" />
+                                                
+                                                <Label Text="{Binding Email}"
+                                                       FontFamily="BicycletteRegular"
+                                                       FontSize="13"
+                                                       TextColor="#94A3B8" />
                                             </VerticalStackLayout>
                                         </Grid>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
-                                
+
                                 <CollectionView.EmptyView>
                                     <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20">
                                         <Label Text="No se encontraron destinatarios registrados"

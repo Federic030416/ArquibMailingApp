@@ -18,7 +18,7 @@ public partial class NuevoEnvioPage : ContentPage
 
 #if WINDOWS
         // Oculta los checkboxes nativos de Windows que se ven oscuros y descuadran el diseño
-        Microsoft.Maui.Handlers.CollectionViewHandler.Mapper.AppendToMapping("HideWinUICheckbox", (handler, view) =>
+        Microsoft.Maui.Controls.Handlers.Items.CollectionViewHandler.Mapper.AppendToMapping("HideWinUICheckbox", (handler, view) =>
         {
             if (handler.PlatformView is Microsoft.UI.Xaml.Controls.ListViewBase listViewBase)
             {
@@ -53,6 +53,7 @@ public partial class NuevoEnvioPage : ContentPage
                     _viewModel.DestinatariosSeleccionados.Add(destinatario);
                 }
             }
+            _viewModel.NotificarSeleccionCambiada();
         }
     }
 }

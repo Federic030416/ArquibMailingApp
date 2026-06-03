@@ -14,7 +14,7 @@ public class NuevoEnvioViewModel : BaseViewModel
     private readonly EnviarDocumentoUseCase      _enviarUseCase;
     private readonly ObtenerDestinatariosUseCase _obtenerUseCase;
 
-    private Destinatario? _destinatarioSeleccionado;
+
     private string        _rutaArchivo    = string.Empty;
     private string        _nombreArchivo  = "Ningún archivo seleccionado";
     private string        _mensajeEstado  = string.Empty;
@@ -45,6 +45,7 @@ public class NuevoEnvioViewModel : BaseViewModel
 
     public ObservableCollection<Destinatario> Destinatarios { get; }
     public ObservableCollection<Destinatario> DestinatariosFiltrados { get; }
+    public ObservableCollection<Destinatario> DestinatariosSeleccionados { get; } = new();
 
     public bool EsEnvioManual
     {
@@ -76,15 +77,17 @@ public class NuevoEnvioViewModel : BaseViewModel
         }
     }
 
-    public Destinatario? DestinatarioSeleccionado
+    public bool TieneSeleccionados => DestinatariosSeleccionados.Count > 0;
+
+    public string TextoSeleccionados => DestinatariosSeleccionados.Count > 0
+        ? $"{DestinatariosSeleccionados.Count} destinatarios seleccionados"
+        : string.Empty;
+
+    public void NotificarSeleccionCambiada()
     {
-        get => _destinatarioSeleccionado;
-        set
-        {
-            SetProperty(ref _destinatarioSeleccionado, value);
-            // Revalida el comando de envío cuando cambia el destinatario
-            ((Command)EnviarCommand).ChangeCanExecute();
-        }
+        OnPropertyChanged(nameof(TieneSeleccionados));
+        OnPropertyChanged(nameof(TextoSeleccionados));
+        ((Command)EnviarCommand).ChangeCanExecute();
     }
 
     public string RutaArchivo
@@ -177,39 +180,52 @@ public class NuevoEnvioViewModel : BaseViewModel
     private async Task EnviarAsync()
     {
         IsBusy        = true;
-        MensajeEstado = "Enviando correo...";
+        MensajeEstado = "Enviando correos de campaña...";
 
         try
         {
-            Destinatario dest;
+            List<Destinatario> destinatariosAEnviar = new();
             if (EsEnvioManual)
             {
-                dest = new Destinatario
+                destinatariosAEnviar.Add(new Destinatario
                 {
                     Id = "Manual",
                     Consecutivo = "Manual",
                     Email = CorreoManual.Trim(),
                     Nombre = CorreoManual.Trim()
-                };
+                });
             }
             else
             {
-                dest = DestinatarioSeleccionado!;
+                destinatariosAEnviar.AddRange(DestinatariosSeleccionados);
             }
 
-            var documento = new Documento
+            int exitos = 0;
+            int fallidos = 0;
+
+            foreach (var dest in destinatariosAEnviar)
             {
-                Consecutivo   = dest.Consecutivo,
-                RutaArchivo   = RutaArchivo,
-                NombreArchivo = NombreArchivo
-            };
+                var documento = new Documento
+                {
+                    Consecutivo   = dest.Consecutivo,
+                    RutaArchivo   = RutaArchivo,
+                    NombreArchivo = NombreArchivo
+                };
 
-            var exito = await _enviarUseCase.EjecutarAsync(documento, dest);
+                var exito = await _enviarUseCase.EjecutarAsync(documento, dest);
+                if (exito) exitos++;
+                else fallidos++;
+            }
 
-            EnvioExitoso  = exito;
-            MensajeEstado = exito
-                ? $"✅ Enviado exitosamente a {dest.Email}"
-                : "❌ Error al enviar. Revisa los logs.";
+            EnvioExitoso = (fallidos == 0);
+            if (fallidos == 0)
+            {
+                MensajeEstado = $"✅ Todos los correos ({exitos}) fueron enviados exitosamente.";
+            }
+            else
+            {
+                MensajeEstado = $"⚠️ Se enviaron {exitos} correos con éxito, pero fallaron {fallidos}.";
+            }
         }
         catch (Exception ex)
         {
@@ -232,7 +248,7 @@ public class NuevoEnvioViewModel : BaseViewModel
         if (EsEnvioManual)
             return !string.IsNullOrWhiteSpace(CorreoManual) && CorreoManual.Contains("@");
         else
-            return DestinatarioSeleccionado != null;
+            return DestinatariosSeleccionados.Count > 0;
     }
 
     /// <summary>

@@ -101,6 +101,12 @@
         ContentTemplate="{DataTemplate pages:NuevoEnvioPage}" />
     
     <ShellContent
+        Title="Metricas"
+        Route="Metricas"
+        Icon="metrics_icon.png"
+        ContentTemplate="{DataTemplate pages:DashboardPage}" />
+    
+    <ShellContent
         Title="Configurations"
         Route="Configurations"
         Icon="settings_icon.png"

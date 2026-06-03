@@ -18,19 +18,29 @@ public class DashboardViewModel : BaseViewModel
 
     public DashboardViewModel(ObtenerDestinatariosUseCase obtenerUseCase)
     {
-        Title           = "Dashboard";
+        Title = "Dashboard";
         _obtenerUseCase = obtenerUseCase;
 
         CargarResumenCommand = new Command(async () => await CargarResumenAsync());
+        ContinuarCommand = new Command(async () => await ContinuarAsync());
+        CancelarCommand = new Command(()=> MostrarInvitacion = false);
     }
 
-    // ── Propiedades observables ──────────────────────────────────────────────
+    //  Propiedades observables
 
     /// <summary>Total de destinatarios cargados desde el Excel.</summary>
     public int TotalDestinatarios
     {
         get => _totalDestinatarios;
         set => SetProperty(ref _totalDestinatarios, value);
+    }
+
+    private bool _mostrarInvitacion = true;
+
+    public bool MostrarInvitacion
+    {
+        get => _mostrarInvitacion;
+        set => SetProperty(ref _mostrarInvitacion, value);
     }
 
     /// <summary>Cantidad de PDFs en la carpeta input/ listos para enviar.</summary>
@@ -54,11 +64,13 @@ public class DashboardViewModel : BaseViewModel
         set => SetProperty(ref _ultimaActividad, value);
     }
 
-    // ── Comandos ─────────────────────────────────────────────────────────────
+    //  Comandos 
 
-    public ICommand CargarResumenCommand { get; }
+    public ICommand CargarResumenCommand {get;}
+    public ICommand ContinuarCommand {get;}
+    public ICommand CancelarCommand {get;}
 
-    // ── Lógica ───────────────────────────────────────────────────────────────
+    //  Lógica
 
     /// <summary>
     /// Carga las métricas del resumen al entrar al Dashboard.
@@ -96,5 +108,10 @@ public class DashboardViewModel : BaseViewModel
         {
             IsBusy = false;
         }
+    }
+
+    private async Task ContinuarAsync()
+    {
+        await Shell.Current.GoToAsync("//Campaña");
     }
 }

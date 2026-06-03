@@ -2,70 +2,107 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ArquibMailing.Maui.Pages.DestinatariosPage"
-             Title="Destinatarios"
-             BackgroundColor="#F7F9FC">
+             Title="Audience"
+             BackgroundColor="#080F24">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,Auto,*" Padding="28,24" RowSpacing="16">
 
-        <!-- Barra de búsqueda -->
-        <Border Grid.Row="0" Margin="20,20,20,10" Padding="0"
-               BackgroundColor="White"
-               Stroke="#E2E8F0"
-               StrokeThickness="1"
-               StrokeShape="RoundRectangle 12">
-            <SearchBar Placeholder="🔍 Buscar por correo o consecutivo..."
+        <!-- BARRA SUPERIOR (HEADER PREMIUM DE MARCA) -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,8">
+            <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                <Label Text="Arquib Mailing Service"
+                       FontFamily="BicycletteBlack"
+                       FontSize="24"
+                       TextColor="White" />
+                <Label Text="Audiencia Completa e Importación de Contactos"
+                       FontFamily="BicycletteRegular"
+                       FontSize="12"
+                       TextColor="#AC8743" />
+            </VerticalStackLayout>
+
+            <HorizontalStackLayout Grid.Column="1" Spacing="20" VerticalOptions="Center">
+                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                    <Border BackgroundColor="#4163B4"
+                            StrokeShape="RoundRectangle 18"
+                            WidthRequest="36" HeightRequest="36">
+                        <Label Text="UA" FontFamily="BicycletteBlack" FontSize="13" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="Usuario Arquib" FontFamily="BicycletteNormal" FontSize="13" TextColor="#EFEDED" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <BoxView WidthRequest="1" HeightRequest="24" Color="#1F2E51" VerticalOptions="Center" />
+                <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                    <Border BackgroundColor="Transparent" Stroke="#4163B4" StrokeThickness="1.5" StrokeShape="RoundRectangle 11" WidthRequest="22" HeightRequest="22">
+                        <Label Text="?" FontFamily="BicycletteBlack" FontSize="12" TextColor="#4163B4" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="Help" FontFamily="BicycletteNormal" FontSize="13" TextColor="#4163B4" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <!-- Barra de búsqueda Dark -->
+        <Border Grid.Row="1" BackgroundColor="#080F24" Stroke="#2A4B659E" StrokeShape="RoundRectangle 8" Padding="2,0" Margin="0,0,0,8">
+            <SearchBar Placeholder="Buscar por correo o consecutivo..."
                        Text="{Binding CriterioBusqueda}"
-                       BackgroundColor="Transparent" />
+                       FontFamily="BicycletteRegular"
+                       TextColor="White"
+                       PlaceholderColor="#64748B"
+                       BackgroundColor="Transparent"
+                       CancelButtonColor="#4163B4" />
         </Border>
 
         <!-- Lista de destinatarios -->
-        <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding Destinatarios}"
-                        Margin="20,0,20,20">
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Destinatarios}">
 
             <CollectionView.EmptyView>
                 <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="12" Padding="40">
                     <Label Text="📭" FontSize="48" HorizontalOptions="Center" />
                     <Label Text="No se encontraron destinatarios"
-                           FontSize="16" TextColor="#94A3B8"
+                           FontFamily="BicycletteRegular"
+                           FontSize="15" TextColor="#94A3B8"
                            HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="0,4" Padding="16"
-                           BackgroundColor="White"
-                           Stroke="#E2E8F0"
-                           StrokeThickness="1"
-                           StrokeShape="RoundRectangle 12">
+                    <Border Margin="0,6" Padding="16"
+                            BackgroundColor="#1F2E51"
+                            Stroke="#2A4B659E"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12"
+                            Shadow="{Shadow Brush=Black, Offset='0,3', Radius=6, Opacity=0.15}">
                         <Grid ColumnDefinitions="Auto,*">
 
                             <!-- Avatar con consecutivo -->
                             <Border Grid.Column="0"
-                                    BackgroundColor="#0077B6"
+                                    BackgroundColor="#4163B4"
                                     StrokeShape="RoundRectangle 22"
                                     Stroke="Transparent"
                                     WidthRequest="44" HeightRequest="44"
                                     VerticalOptions="Center">
                                 <Label Text="{Binding Consecutivo}"
                                        TextColor="White"
-                                       FontSize="14"
-                                       FontAttributes="Bold"
+                                       FontFamily="BicycletteBlack"
+                                       FontSize="15"
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center" />
                             </Border>
 
                             <!-- Datos del destinatario -->
-                            <VerticalStackLayout Grid.Column="1" Margin="14,0,0,0" Spacing="2" VerticalOptions="Center">
+                            <VerticalStackLayout Grid.Column="1" Margin="16,0,0,0" Spacing="3" VerticalOptions="Center">
                                 <Label Text="{Binding Email}"
-                                       FontAttributes="Bold"
-                                       FontSize="14"
-                                       TextColor="#0F172A" />
-                                <Label Text="{Binding FileName}"
+                                       FontFamily="BicycletteBlack"
+                                       FontSize="15"
+                                       TextColor="White" />
+                                
+                                <Label Text="{Binding FileName, StringFormat='Origen: {0}'}"
+                                       FontFamily="BicycletteRegular"
                                        FontSize="12"
-                                       TextColor="#64748B" />
-                                <Label Text="{Binding Consecutivo, StringFormat='# {0}'}"
+                                       TextColor="#AC8743" />
+                                
+                                <Label Text="{Binding Consecutivo, StringFormat='Consecutivo: # {0}'}"
+                                       FontFamily="BicycletteItalic"
                                        FontSize="11"
                                        TextColor="#94A3B8" />
                             </VerticalStackLayout>
